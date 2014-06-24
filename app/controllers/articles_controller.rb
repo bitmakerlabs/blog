@@ -1,4 +1,6 @@
 class ArticlesController < ApplicationController
+  before_action :ensure_logged_in, only: [:new, :create, :edit, :update, :destroy]
+
   def index
     @articles = Article.all
   end
