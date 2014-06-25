@@ -8,6 +8,20 @@
   <%= @article.text %>
 </p>
 
+
+<% @article.comments.each do |comment| %>
+  <% if comment.id %>
+    <p><%= comment.body %></p>
+    <span>by <%= comment.user.first_name %>
+  <% end %>
+<% end %>
+
+<%= form_for [@article, @comment] do |f| %>
+  <%= f.label :body, "Add your comment" %>
+  <%= f.text_area :body %>
+  <%= f.submit %>
+<% end %>
+
 <%= link_to 'Edit this article', edit_article_path(@article) %>
 
 <%= link_to 'Back to articles', articles_path %>
