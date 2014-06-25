@@ -10,12 +10,22 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    @article = Article.new(article_params)
+    @article = current_user.articles.build(article_params)
+
+    # You can also do
+    # @article = Article.new(article_params)
+    # @article.user_id = current_user.id
+
+    # PATH vs. URL
+    # article_path => "/articles/3"
+    # article_url => "http://localhost:3000/articles/3"
 
     if @article.save
+      flash[:notice] = "This article was successfully created. YAY!"
       redirect_to article_path(@article)
     else
-      "OMG THERE's AN ERROR"
+      flash.now[:alert] = "OMG SOMETHING BAD HAPPENED. BOO."
+      render 'new'
     end
   end
 
